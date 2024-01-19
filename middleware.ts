@@ -1,8 +1,4 @@
-import {
-  clerkMiddleware,
-  createRouteMatcher,
-  redirectToSignIn,
-} from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher(["/dashboard"]);
 
@@ -11,7 +7,7 @@ const isProtectedRoute = createRouteMatcher(["/dashboard"]);
 // See https://clerk.com/docs/references/nextjs/auth-middleware for more information about configuring your Middleware
 export default clerkMiddleware((auth, req) => {
   if (!auth().userId && isProtectedRoute(req)) {
-    return redirectToSignIn({ returnBackUrl: req.url });
+    return auth().redirectToSignIn({ returnBackUrl: req.url });
   }
 });
 
